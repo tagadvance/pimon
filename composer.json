@@ -1,0 +1,14 @@
+{
+    "name": "tagadvance/pimon",
+    "description": "A lightweight monitoring solution for Rasberry Pis running Ubuntu.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tag",
+            "email": "tagadvance+github.com@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
