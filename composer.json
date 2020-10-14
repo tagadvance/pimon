@@ -2,6 +2,12 @@
     "name": "tagadvance/pimon",
     "description": "A lightweight monitoring solution for Rasberry Pis running Ubuntu.",
     "type": "project",
+    "keywords": [
+        "raspberry",
+        "pi",
+        "monitoring"
+    ],
+    "homepage": "https://github.com/tagadvance/pimon",
     "license": "MIT",
     "authors": [
         {
@@ -9,12 +15,15 @@
             "email": "tagadvance+github.com@gmail.com"
         }
     ],
+    "support": {
+        "issues": "https://github.com/tagadvance/pimon/issues"
+    },
     "minimum-stability": "stable",
     "require": {
         "php": "^7.4",
-        "ext-json": "^7.4",
-        "ext-PDO": "^7.4",
-        "ext-sqlite3": "^7.4"
+        "ext-json": "*",
+        "ext-PDO": "*",
+        "ext-sqlite3": "*"
     },
 
     "require-dev": {
