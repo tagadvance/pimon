@@ -35,7 +35,6 @@
     },
     "require-dev": {
         "ext-dom": "*",
-        "phpunit/phpunit": "^9.4",
-        "hamcrest/hamcrest-php": "^2.0"
+        "phpunit/phpunit": "^9.4"
     }
 }
