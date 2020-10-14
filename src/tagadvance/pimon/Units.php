@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace tagadvance\pimon;
 
-class Unit
+class Units
 {
 	const ABSOLUTE = '=';
 	const BYTE = 'B';

@@ -31,22 +31,28 @@ class Top
 				return $matches;
 			}
 
-			throw new \RuntimeException('No matches found.');
+			throw new \RuntimeException(
+				<<<MESSAGE
+				No matches found!
+				\$pattern = '$pattern';
+				\$subject = '$subject';
+				MESSAGE
+			);
 		};
 
-		$pattern = '/^top - (\d{2}:\d{2}:\d{2}) up\s+(.*),\s+(\d+) users?,\s+load average: (\d+\.\d{2}), (\d+\.\d{2}), (\d+\.\d{2})$/';
+		$pattern = '/^top - (\d{2}:\d{2}:\d{2}) up\s*(.*),\s*(\d+) users?,\s*load average: (\d+\.\d{2}), (\d+\.\d{2}), (\d+\.\d{2})$/';
 		[$time, $uptime, $users, $loadAverage1Minute, $loadAverage5Minutes, $loadAverage15Minutes] = $match($pattern, $top);
 
-		$pattern = '/^Tasks: (\d+) total,\s+(\d+) running, (\d+) sleeping,\s+(\d+) stopped,\s+(\d+) zombie$/';
+		$pattern = '/^Tasks: (\d+) total,\s*(\d+) running, (\d+) sleeping,\s*(\d+) stopped,\s*(\d+) zombie$/';
 		[$tasksTotal, $tasksRunning, $tasksSleeping, $tasksStopped, $tasksZombie] = $match($pattern, $tasks);
 
-		$pattern = '/^%Cpu\(s\):\s+(\d+\.\d+) us,\s+(\d+\.\d+) sy,\s+(\d+\.\d+) ni, (\d+\.\d+) id,\s+(\d+\.\d+) wa,\s+(\d+\.\d+) hi,\s+(\d+\.\d+) si,\s+(\d+\.\d+) st$/';
+		$pattern = '/^%Cpu\(s\):\s*(\d+\.\d+) us,\s*(\d+\.\d+) sy,\s*(\d+\.\d+) ni,\s*(\d+\.\d+) id,\s*(\d+\.\d+) wa,\s*(\d+\.\d+) hi,\s*(\d+\.\d+) si,\s*(\d+\.\d+) st$/';
 		[$cpuUserSpace, $cpuKernelSpace, $cpuNice, $cpuIdle, $cpuWait, $cpuHardwareInterrupts, $cpuSoftwareInterrupts, $cpuSteal] = $match($pattern, $cpu);
 
-		$pattern = '/^([KMGTPE]iB) Mem\s*:\s+([0-9.]+) total,\s+([0-9.]+) free,\s+([0-9.]+) used,\s+([0-9.]+) buff\/cache$/';
+		$pattern = '/^([KMGTPE]iB) Mem\s*:\s*([0-9.]+) total,\s*([0-9.]+) free,\s*([0-9.]+) used,\s*([0-9.]+) buff\/cache$/';
 		[$memoryUnit, $memoryTotal, $memoryFree, $memoryUsed, $memoryCache] = $match($pattern, $memory);
 
-		$pattern = '/^([KMGTPE]iB) Swap:\s+([0-9.]+) total,\s+([0-9.]+) free,\s+([0-9.]+) used\.\s+([0-9.]+) avail Mem\s*$/';
+		$pattern = '/^([KMGTPE]iB) Swap:\s*([0-9.]+) total,\s*([0-9.]+) free,\s*([0-9.]+) used\.\s*([0-9.]+) avail Mem\s*$/';
 		[$swapUnit, $swapTotal, $swapFree, $swapUsed, $memoryAvailable] = $match($pattern, $swap);
 
 		$toPercent = function (string $value): array {
