@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2fcbc7b1488e28308dda917919fc563d",
+    "content-hash": "1ed7930fd395c2f053ef2754fbecafd7",
     "packages": [
         {
             "name": "dragonmantank/cron-expression",
@@ -418,6 +418,52 @@
             ],
             "description": "A polyfill for getallheaders.",
             "time": "2019-03-08T08:55:37+00:00"
+        },
+        {
+            "name": "tagadvance/elephant-top-hat",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tagadvance/elephant-top-hat.git",
+                "reference": "d8ce6b74427b38f96c942792d3122aaf97864552"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tagadvance/elephant-top-hat/zipball/d8ce6b74427b38f96c942792d3122aaf97864552",
+                "reference": "d8ce6b74427b38f96c942792d3122aaf97864552",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "php": "^7.4"
+            },
+            "require-dev": {
+                "ext-dom": "*",
+                "phpunit/phpunit": "^9.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tag",
+                    "email": "tagadvance+github.com@gmail.com"
+                }
+            ],
+            "description": "A tiny stand-alone library for parsing the Linux `top` command.",
+            "homepage": "https://github.com/tagadvance/elephant-top-hat",
+            "keywords": [
+                "linux",
+                "top"
+            ],
+            "time": "2020-10-14T23:45:24+00:00"
         }
     ],
     "packages-dev": [
@@ -2380,7 +2426,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "tagadvance/elephant-top-hat": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
