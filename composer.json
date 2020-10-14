@@ -12,7 +12,9 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^7.4",
-        "ext-PDO": "*"
+        "ext-json": "^7.4",
+        "ext-PDO": "^7.4",
+        "ext-sqlite3": "^7.4"
     },
 
     "require-dev": {
