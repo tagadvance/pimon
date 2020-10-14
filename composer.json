@@ -34,7 +34,6 @@
         }
     },
     "require-dev": {
-        "ext-dom": "*",
         "phpunit/phpunit": "^9.4"
     }
 }
