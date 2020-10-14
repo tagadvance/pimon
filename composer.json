@@ -23,7 +23,8 @@
         "php": "^7.4",
         "ext-json": "*",
         "ext-PDO": "*",
-        "ext-sqlite3": "*"
+        "ext-sqlite3": "*",
+        "mtdowling/cron-expression": "^1.2"
     },
 
     "require-dev": {
