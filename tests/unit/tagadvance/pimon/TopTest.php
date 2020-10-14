@@ -10,7 +10,7 @@ final class TopTest extends TestCase
 {
 	public function testGetTopData(): void
 	{
-		$this->assertNotNull(Top::getTopData());
+		$this->assertIsArray(Top::getTopData());
 	}
 
 	public function testParse(): void
@@ -20,6 +20,8 @@ final class TopTest extends TestCase
 		$output = file_get_contents($pathToOutput);
 		$result = Top::parse($output);
 
-		$this->assertNotNull($result);
+		$this->assertIsArray($result);
+		// ensure all values are not null
+		$this->assertCount(count(array_filter($result, fn($value) => isset($value))), $result);
 	}
 }
