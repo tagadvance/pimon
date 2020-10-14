@@ -25,8 +25,8 @@
         "ext-json": "*",
         "ext-PDO": "*",
         "ext-sqlite3": "*",
-        "guzzlehttp/guzzle": "^7.2",
         "dragonmantank/cron-expression": "^3.0",
+        "guzzlehttp/guzzle": "^7.2",
         "tagadvance/elephant-top-hat": "dev-main"
     },
     "autoload" : {
