@@ -3,11 +3,13 @@ A lightweight monitoring solution for Rasberry Pis running Ubuntu
 
 ## Installation
 ```
+sudo apt install --assume-yes composer make php-bcmath php-cli php-curl php-json php-mysql php-sqlite3 php-xml
+
 mkdir ~/git
 cd ~/git
-git clone git@github.com:tagadvance/pimon.git
+git clone https://github.com/tagadvance/pimon.git
 cd pimon
-sudo make install
+make install
 make test
 
 ./pimon.php --dry-run
