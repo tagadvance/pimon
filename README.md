@@ -9,7 +9,6 @@ git clone git@github.com:tagadvance/pimon.git
 cd pimon
 sudo make install
 make test
-make init
 
 ./pimon.php --dry-run
 ```
@@ -25,8 +24,8 @@ make update
 ```
 
 ## Plugins
-Plugins must have a filename matching '*Plugin.php' and implement `\tagadvance\pimon\Plugin`. Schedule can be overridden on a per-plugin basis.
-
-Plugins may have their own `composer.json`. I leave it to you to ensure that there are no dependency conflicts.
+Plugins must have a filename matching '*Plugin.php' and implement `\tagadvance\pimon\Plugin`.
 
 Plugins should return a new instance of the plugin at the end of the class definition.
+
+I haven't figured out how to best handle dependencies in plugins. For me it isn't an issue.

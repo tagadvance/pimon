@@ -20,16 +20,24 @@ if (!is_readable($configIni)) {
 	throw new RuntimeException('Default configuration is missing!');
 }
 
-$config = parse_ini_file($configIni);
-if (!isset($config['dsn'])) {
+$configuration = parse_ini_file($configIni);
+if (!isset($configuration['dsn'])) {
 	throw new RuntimeException('Please configure DSN.');
 }
-$dsn = $config['dsn'];
-$username = $config['username'] ?? null;
-$password = $config['password'] ?? null;
-$defaultSchedule = $config['schedule'] ?? DEFAULT_SCHEDULE;
-$pluginsGlob = $config['plugins_glob'];
-$pathsToPlugins = glob($config['plugins_glob']);
+$dsn = $configuration['dsn'];
+$username = $configuration['username'] ?? null;
+$password = $configuration['password'] ?? null;
+$defaultSchedule = $configuration['schedule'] ?? DEFAULT_SCHEDULE;
+$glob = function (string $glob) {
+	if (strpos($glob, DIRECTORY_SEPARATOR) !== 0) {
+		$glob = implode(DIRECTORY_SEPARATOR, [__DIR__, $glob]);
+	}
+
+	return glob($glob);
+};
+$pathsToPlugins = array_merge(
+	...array_map($glob, $configuration['plugins'] ?? [])
+);
 if (empty($pathsToPlugins)) {
 	throw new RuntimeException('No Plugins detected!');
 }
@@ -40,34 +48,49 @@ $pdo = new PDO($dsn, $username, $password, [
 //$statement = $pdo->prepare(''); // TODO: create metrics table
 
 /** @var \tagadvance\pimon\Plugin[] $plugins */
-$pluginTuples = array_map(
+$plugins = array_map(
 	function (string $pathToPlugin) {
-		$dir = dirname($pathToPlugin);
-		$pathToPluginConfiguration = implode(DIRECTORY_SEPARATOR, [$dir, 'config.ini']);
-		return [
-			parse_ini_file($pathToPluginConfiguration) ?: [],
-			require_once $pathToPlugin
-		];
+		return require_once $pathToPlugin;
 	},
 	$pathsToPlugins
 );
 $metrics = array_map(
-	function (array $tuple): array {
-		[$configuration, $plugin] = $tuple;
+	function (\tagadvance\pimon\Plugin $plugin) use ($configuration, $defaultSchedule, $isDryRun): array {
 		if ($plugin instanceof \tagadvance\pimon\Plugin) {
-			return $plugin->getMetrics($configuration);
+			$schedule = $plugin->getSchedule($configuration) ?? $defaultSchedule;
+			$cron = Cron\CronExpression::factory($schedule);
+
+			if ($cron->isDue() || $isDryRun) {
+				return $plugin->getMetrics($configuration);
+			}
+
+			return [];
 		} else {
 			$message = sprintf('All plugins must implement %s!', \tagadvance\pimon\Plugin::class);
 			throw new \RuntimeException($message);
 		}
 	},
-	$pluginTuples
+	$plugins
 );
 $metrics = array_merge(...$metrics);
 
+// TODO: replace dry-run with unit test
 if ($isDryRun) {
-	var_export($metrics); // TODO: override __toString and beautify output
+	$beautify = fn(\tagadvance\pimon\Metric $metric) => sprintf('%s: %s%s', $metric->getName(), $metric->getValue(), $metric->getUnit() ?? '');
+	$beautifulMetrics = array_map($beautify, $metrics);
+	print 'Metrics:' . PHP_EOL . implode(PHP_EOL, $beautifulMetrics) . PHP_EOL;
 	exit;
 } else {
 	// TODO: insert metrics into database
 }
+
+// TODO
+//current ip address
+// nginx
+//Open Files
+//df
+//network ingress and egress iftop
+//disk read ops
+//disk write ops
+//disk reads
+//disk writes

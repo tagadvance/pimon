@@ -7,7 +7,13 @@ namespace tagadvance\pimon;
 interface Plugin
 {
 	/**
-	 * @param array $configuration The result of parsing the config.ini in the plugin directory (if present)
+	 * @param array $configuration
+	 * @return ?string A cron expression
+	 */
+	public function getSchedule(array $configuration): ?string;
+
+	/**
+	 * @param array $configuration
 	 * @return Metric[]
 	 */
 	public function getMetrics(array $configuration): array;

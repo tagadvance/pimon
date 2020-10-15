@@ -6,7 +6,6 @@ namespace tagadvance\pimon;
 
 class Units
 {
-	const ABSOLUTE = '=';
 	const BYTE = 'B';
 	const MEBIBYTE = 'MiB';
 	const CELSIUS = 'C';
@@ -14,7 +13,6 @@ class Units
 	const SECOND = 'S';
 	const MILLISECOND = 'MS';
 	const ALL_UNITS = [
-		self::ABSOLUTE,
 		self::BYTE,
 		self::MEBIBYTE,
 		self::CELSIUS,
