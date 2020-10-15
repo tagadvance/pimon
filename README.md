@@ -16,9 +16,9 @@ make test
 ```
 
 ## Scheduling
-```
-echo "* * * * * root ${HOME}/pimon/pimon.php" > /etc/cron.d/pimon
-```
+`crontab -e`
+Add the following to the bottom and ensure there is a blank line at the bottom.
+`* * * * * /home/ubuntu/git/pimon/pimon.php`
 
 ## Update
 ```
