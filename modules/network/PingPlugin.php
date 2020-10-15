@@ -33,9 +33,9 @@ class PingPlugin implements Plugin
 
 	public static function ping(string $address): Measurement
 	{
-		$ping = `ping -c 1 $address | grep 'time='`;
+		$ping = trim(`ping -c 1 $address | grep 'time='`);
 
-		$pattern = '/^\d+ bytes from (.*): icmp_seq=\d+ ttl=\d+ time=(\d+\.\d{1}) ms$/';
+		$pattern = '/^\d+ bytes from (.*): icmp_seq=\d+ ttl=\d+ time=(\d+\.\d+) ms$/';
 		$matches = [];
 		if (preg_match($pattern, $ping, $matches)) {
 			[$_, $address, $ms] = $matches;

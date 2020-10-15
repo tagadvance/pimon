@@ -4,6 +4,7 @@
 declare(strict_types=1);
 error_reporting(E_ALL);
 
+define('DEFAULT_GC', 30);
 define('DEFAULT_SCHEDULE', '* * * * *');
 define('DEFAULT_PLUGINS_GLOB', 'plugins-enabled/**/*Plugin.php');
 
@@ -27,6 +28,7 @@ if (!isset($configuration['dsn'])) {
 $dsn = $configuration['dsn'];
 $username = $configuration['username'] ?? null;
 $password = $configuration['password'] ?? null;
+$retentionDays = intval($configuration['collect_garbage'] ?? DEFAULT_GC);
 $defaultSchedule = $configuration['schedule'] ?? DEFAULT_SCHEDULE;
 $glob = function (string $glob) {
 	if (strpos($glob, DIRECTORY_SEPARATOR) !== 0) {
@@ -45,7 +47,11 @@ if (empty($pathsToPlugins)) {
 $pdo = new PDO($dsn, $username, $password, [
 	\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
 ]);
-//$statement = $pdo->prepare(''); // TODO: create metrics table
+$database = \tagadvance\pimon\sql\Database::getDatabase($pdo);
+$database->createMetricsTable();
+if ($retentionDays > 0) {
+	$database->collectGarbage($retentionDays);
+}
 
 /** @var \tagadvance\pimon\Plugin[] $plugins */
 $plugins = array_map(
@@ -74,14 +80,13 @@ $metrics = array_map(
 );
 $metrics = array_merge(...$metrics);
 
-// TODO: replace dry-run with unit test
 if ($isDryRun) {
 	$beautify = fn(\tagadvance\pimon\Metric $metric) => sprintf('%s: %s%s', $metric->getName(), $metric->getValue(), $metric->getUnit() ?? '');
 	$beautifulMetrics = array_map($beautify, $metrics);
 	print 'Metrics:' . PHP_EOL . implode(PHP_EOL, $beautifulMetrics) . PHP_EOL;
 	exit;
 } else {
-	// TODO: insert metrics into database
+	$database->insertMetrics(...$metrics);
 }
 
 // TODO
