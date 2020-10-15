@@ -425,12 +425,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/tagadvance/elephant-top-hat.git",
-                "reference": "d8ce6b74427b38f96c942792d3122aaf97864552"
+                "reference": "2acba6045c7b294f5a04d9d14015a8aa4806d28f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tagadvance/elephant-top-hat/zipball/d8ce6b74427b38f96c942792d3122aaf97864552",
-                "reference": "d8ce6b74427b38f96c942792d3122aaf97864552",
+                "url": "https://api.github.com/repos/tagadvance/elephant-top-hat/zipball/2acba6045c7b294f5a04d9d14015a8aa4806d28f",
+                "reference": "2acba6045c7b294f5a04d9d14015a8aa4806d28f",
                 "shasum": ""
             },
             "require": {
@@ -463,7 +463,7 @@
                 "linux",
                 "top"
             ],
-            "time": "2020-10-14T23:45:24+00:00"
+            "time": "2020-10-15T02:55:18+00:00"
         }
     ],
     "packages-dev": [
